@@ -1,0 +1,202 @@
+body{
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	font-family: 'Jost', sans-serif;
+	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+}
+
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: #ffffff;
+}
+
+#search {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    width: 80%;
+    max-width: 600px;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: -5%;
+}
+
+#anime-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 0px solid #e0e0e0;
+    border-radius: 8px;
+    margin: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: calc(30% - 40px);
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.anime-image {
+    margin-top: 10%;
+    margin-left: 25%;
+    width: 40%;
+    max-height: 250px;
+    border-radius: 8px 8px 0 0;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-content h2 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    color: #302b63;
+}
+
+.card-content p {
+    margin: 4px 0;
+    color: #000000;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actions a {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #302b63;
+    padding: 8px;
+    width: 50px;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.actions a:hover {
+    background-color: #000000;
+    color: #ddd;
+}
+
+.add
+{
+    margin-top: -3%;
+}
+
+.navegation {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.navegation button {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    font-size: 20px;
+    width: 50px;
+}
+
+.navegation button:hover {
+    text-decoration: none;
+    background-color: #302b63;
+	color: #ddd;
+    font-weight: bold;
+    border: 1px solid #000000;
+    font-size: 20px;
+    width: 50px;
+    margin-top: -3%;
+}
+
+
+header {
+    background-color: #302983;
+    padding: 10px 20px; /* Relleno interior */
+    justify-content: space-between; /* Distribución de elementos */
+    align-items: center; /* Alineación vertical */
+    border-bottom: 0px solid #ccc; /* Borde inferior */
+    margin: 0; /* Quitar márgenes */
+    width: 100%; /* Ocupa todo el ancho */
+    box-sizing: border-box; /* Incluir relleno y borde en el ancho */
+}
+
+.buscar h1
+{
+    color: #ffffff;
+    margin-left: -80%;
+}
+
+.info
+{
+    display: flex;
+    font-size: 14px;
+    width: 100%;
+    margin-left: -5px;
+    margin-top: 5px;
+}
+
+.info2
+{
+    display: flex;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+.info3
+{
+    display: flex;
+   
+}
+.info4
+{
+    display: flex;
+    margin-left: 50%;
+}
+.info3 > div {
+    margin-right: 1px; /* Espacio entre elementos */
+    color: #ffffff;
+    width: 150px;
+    text-align: center;
+}
+.info4 > div {
+    margin-right: 2px; /* Espacio entre elementos */
+    color: #ffffff;
+    width: 120px;
+    text-align: center;
+}
+
+.busqueda
+{
+    color: #000000;
+    font-size: 30px;
+}
+
+.info a
+{
+    color: #ffffff;
+    text-decoration: none;
+}
+

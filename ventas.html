@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="ventas.css">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header> 
+        <div class="buscar">
+            <h1>technology store</h1>
+            <input type="text" id="search" placeholder="Search by name">
+        </div>
+        <div class="info">
+            <div class="info2">
+                <div class="info3">
+                    <div><a href="ventas.html">Ventas</a></div>
+                    <div><a href="inventario.html">Inventario</a></div>
+                </div>
+                <div class="info4">
+                    <div><a href="index.html">Cerrar Sesion</a></div>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+    <div id="anime-list" class="lista"></div>
+    <div id="pagination" class="navegation"></div>
+
+    <script>
+        document.getElementById('search').addEventListener('input', function() {
+            currentPage = 1; // Reset to first page on search
+            fetchAnimes(this.value);
+        });
+
+        const ITEMS_PER_PAGE = 3;
+        let currentPage = 1;
+        let allproductos = [];
+
+        function fetchAnimes(query = '') {
+            fetch('http://localhost:3002/producto')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(JSON.stringify(data, null, 2));
+                    allproductos = data;
+                    displayAnimes(query, currentPage);
+                    createPagination(allproductos.length, ITEMS_PER_PAGE);
+                    console.log(JSON.stringify(data, null, 2));
+                });
+        }
+
+        function displayAnimes(query, page) {
+            const procductoList = document.getElementById('anime-list');
+            procductoList.innerHTML = ''; 
+            const filteredproducto = allproductos.filter(producto => producto.name.toLowerCase().includes(query.toLowerCase()));
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const end = start + ITEMS_PER_PAGE;
+            const paginatedproductos = filteredproducto.slice(start, end);
+
+            paginatedproductos.forEach(anime => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${anime.imagen}" alt="${anime.name}" class="anime-image">
+                    <div class="card-content">
+                        <h2>${anime.name}</h2>
+                        <p>Precio: ${anime.precio}</p>
+                        <p>Fabricante: ${anime.fabricante}</p>
+                        <p>descripcion: ${anime.descripcion}</p>
+                    </div>
+                `;
+                procductoList.appendChild(card);
+            });
+        }
+
+        function createPagination(totalItems, itemsPerPage) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ''; // Clear previous pagination buttons
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    displayAnimes(document.getElementById('search').value, currentPage);
+                });
+                pagination.appendChild(pageButton);
+            }
+        }
+        
+        function deleteAnime(id) {
+            fetch(`http://localhost:8000/animes/${id}`, {
+                method: 'DELETE'
+            }).then(() => fetchAnimes());
+        }
+
+        fetchAnimes();
+</script>
+</body>
+</html>
