@@ -11,7 +11,7 @@ const client = new MongoClient(uris, { useNewUrlParser: true, useUnifiedTopology
 app.use(express.json());
 
 app.use(cors({
-  origin: '*', // Esto permite solicitudes desde cualquier origen. Cambia '*' por la URL específica si es necesario.
+  origin: '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
