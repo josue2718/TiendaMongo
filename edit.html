@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="editar.css">
+
+    <title>Editar Producto</title>
+</head>
+<body>
+    <header>
+        <div class="buscar">
+          <h1>technology store</h1>
+          <h2>Editar Producto</h2>
+        </div>
+        <div class="info">
+          <div class="info2">
+            <div class="info3">
+              <div><a href="ventas.html">Ventas</a></div>
+              <div><a href="inventario.html">Inventario</a></div>
+              <div><a href="crear.html">Añadir Nuevo Producto</a></div>
+            </div>
+            <div class="info4">
+              <div><a href="index.html">Cerrar Sesion</a></div>
+            </div>
+          </div>
+        </div>
+    </header>
+    <form id="actualizar">
+        <label>Name: <input type="text" id="name" required></label><br>
+        <label>Precio: <input type="text" id="precio" required></label><br>
+        <label>Descripcion: <input type="text" id="descripcion" required></label><br>
+        <label>Fabricante: <input type="text" id="fabricante" required></label><br>
+        <label>Imagen: <input type="text" id="imagen" required></label><br>
+        <button type="submit">Editar</button>
+    </form>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const Id = params.get('id');
+
+        fetch(`http://localhost:3002/bproducto/${Id}`)
+            .then(response => response.json())
+            .then(res => {
+                res.forEach(producto => {
+                    console.log(producto.name);
+                    console.log(JSON.stringify(producto, null, 2));
+                    document.getElementById('name').value = producto.name;
+                    document.getElementById('precio').value = producto.precio;
+                    document.getElementById('imagen').value = producto.imagen;
+                    document.getElementById('descripcion').value = producto.descripcion;
+                    document.getElementById('fabricante').value = producto.fabricante;
+                }
+            )}   
+        )
+
+        document.getElementById('actualizar').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+        const producto = {
+            name: document.getElementById('name').value,
+            precio: document.getElementById('precio').value,
+            imagen: document.getElementById('imagen').value, // Usar src para obtener la URL de la imagen
+            descripcion: document.getElementById('descripcion').value,
+            fabricante: document.getElementById('fabricante').value, // Corregido el error tipográfico
+        };
+
+        fetch(`http://localhost:3002/eproducto/${Id}`, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(producto)
+        }).then(() => {
+            window.location.href = 'inventario.html';
+        }).catch(error => {
+            console.error('Error al actualizar el producto:', error);
+        });
+        });
+
+    </script>
+</body>
+</html>

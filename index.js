@@ -3,7 +3,7 @@ document.getElementById('correo').addEventListener('input', async function(event
     const correo = document.getElementById('correo').value;
     const password = document.getElementById('password').value;
     
-    fetch('http://localhost:3002/usuario?correo=' + encodeURIComponent(correo))
+    fetch(`http://localhost:3002/usuario/${encodeURIComponent(correo)}`)
             .then(res => res.json())
             .then(res => {
                 res.forEach(item => {

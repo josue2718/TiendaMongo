@@ -27,13 +27,13 @@ client.connect()
   });
 
 
-app.get('/usuario', async (req, res) => {
+app.get('/usuario/:correo', async (req, res) => {
   try {
 
     console.log('Conexión establecida con MongoDB.');
     const db = client.db('tiendas');
     const collection = db.collection('usuarios');
-    const correo = req.query.correo;
+    const correo = req.params.correo;
 
     const result = await collection.find({ correo: correo }).toArray();
 
@@ -60,6 +60,30 @@ app.get('/producto', async (req, res) => {
     const correo = req.query.correo;
 
     const result = await collection.find({}).toArray();
+
+    if (result.length > 0) {
+      console.log('Productos encontrados');
+      res.status(200).json(result);
+    } else {
+      console.log('Productos no encontrados');
+      res.status(404).send('Productos no encontrados');
+    }
+  } catch (err) {
+    console.error('Error al buscar documento en MongoDB:', err);
+    res.status(500).send('Error al buscar documento en MongoDB.');
+  } 
+  
+});
+
+app.get('/bproducto/:id', async (req, res) => {
+  try {
+
+    console.log('Conexión establecida con MongoDB.');
+    const db = client.db('tiendas');
+    const collection = db.collection('productos');
+    const id = req.params.id;
+
+    const result = await collection.find({_id: new ObjectId(id) }).toArray();
 
     if (result.length > 0) {
       console.log('Productos encontrados');
@@ -121,6 +145,23 @@ app.post('/insertarusuarios', async (req, res) => {
   }
 });
 
+app.post('/insertarproducto', async (req, res) => {
+  try {
+    console.log('nuevo usuario');
+    const db = client.db('tiendas');
+    const collection = db.collection('productos');
+    const {name,precio,imagen,descripcion,fabricante } = req.body;
+
+    await collection.insertOne({name,precio,imagen,descripcion,fabricante});
+
+    console.log('Datos insertados correctamente en MongoDB.');
+    res.status(200).send('Datos insertados correctamente en MongoDB.');
+  } catch (err) {
+    console.error('Error al insertar datos en MongoDB:', err);
+    res.status(500).send('Error al insertar datos en MongoDB.');
+  }
+});
+
 app.delete('/eliminar/:id', async (req, res) => {
   try {
     await client.connect();
@@ -143,4 +184,31 @@ app.delete('/eliminar/:id', async (req, res) => {
     console.error('Error al eliminar documento en MongoDB:', err);
     res.status(500).send('Error al eliminar documento en MongoDB.');
   } 
+});
+
+app.put('/eproducto/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updateFields = req.body; // Los campos a actualizar deben ser enviados en el cuerpo de la solicitud
+
+    console.log('Conexión establecida con MongoDB.');
+    const db = client.db('tiendas');
+    const collection = db.collection('productos');
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(productId) },
+      { $set: updateFields }
+    );
+
+    if (result.matchedCount > 0) {
+      console.log('Producto actualizado');
+      res.status(200).send('Producto actualizado exitosamente');
+    } else {
+      console.log('Producto no encontrado');
+      res.status(404).send('Producto no encontrado');
+    }
+  } catch (err) {
+    console.error('Error al actualizar documento en MongoDB:', err);
+    res.status(500).send('Error al actualizar documento en MongoDB.');
+  }
 });

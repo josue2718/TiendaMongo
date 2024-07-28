@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="editar.css">
+
+    <title>Crear Producto</title>
+</head>
+<body>
+    
+    <header>
+        <div class="buscar">
+          <h1>technology store</h1>
+          <h2>Crear Producto</h2>
+        </div>
+        <div class="info">
+          <div class="info2">
+            <div class="info3">
+              <div><a href="ventas.html">Ventas</a></div>
+              <div><a href="inventario.html">Inventario</a></div>
+              <div><a href="crear.html">Añadir Nuevo Producto</a></div>
+            </div>
+            <div class="info4">
+              <div><a href="index.html">Cerrar Sesion</a></div>
+            </div>
+          </div>
+        </div>
+    </header>
+    <form id="newproduct">
+        <label>Name: <input type="text" id="name" required></label><br>
+        <label>Precio: <input type="text" id="precio" required></label><br>
+        <label>Descripcion: <input type="text" id="descripcion" required></label><br>
+        <label>Fabricante: <input type="text" id="fabricante" required></label><br>
+        <label>Imagen: <input type="text" id="imagen" required></label><br>
+        <button type="submit">Update</button>
+    </form>
+    <script>
+       document.getElementById('newproduct').addEventListener('submit', async function(event) {
+    event.preventDefault();
+  
+    const name = document.getElementById('name').value;
+    const precio = document.getElementById('precio').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const fabricante = document.getElementById('fabricante').value;
+    const imagen = document.getElementById('imagen').value;
+  
+    try {
+      const response = await fetch('http://localhost:3002/insertarproducto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name,precio,descripcion,fabricante,imagen })
+      });
+  
+      if (response.ok) {
+        window.location.href = 'inventario.html';
+      } else {
+        const errorData = await response.json();
+        console.error('Error al insertar producto:', errorData);
+        alert('Error al insertar usuario: ' + (errorData.message || response.statusText));
+      }
+    } catch (err) {
+      console.error('Error de red:', err);
+      alert('Error de red: ' + err.message);
+    }
+  });
+  
+      
+
+    </script>
+</body>
+</html>
