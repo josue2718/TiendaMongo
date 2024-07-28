@@ -26,30 +26,7 @@ client.connect()
     process.exit(1);
   });
 
-app.delete('/eliminar/:id', async (req, res) => {
-  try {
-    console.log('Conexión establecida con MongoDB.');
-    const db = client.db('tiendas');
-    const collection = db.collection('usuarios');
-    const id = req.params.id;
 
-    const result = await collection.deleteOne({ _id: ObjectId(id) });
-
-    if (result.deletedCount === 1) {
-      console.log(`Documento con ID ${id} eliminado correctamente.`);
-      res.status(200).send(`Documento con ID ${id} eliminado correctamente.`);
-    } else {
-      console.log(`No se encontró documento con ID ${id}.`);
-      res.status(404).send(`No se encontró documento con ID ${id}.`);
-    }
-  } catch (err) {
-    console.error('Error al eliminar documento en MongoDB:', err);
-    res.status(500).send('Error al eliminar documento en MongoDB.');
-  } 
-  
-});
-
-// Ruta para buscar por nombre
 app.get('/usuario', async (req, res) => {
   try {
 
@@ -85,11 +62,11 @@ app.get('/producto', async (req, res) => {
     const result = await collection.find({}).toArray();
 
     if (result.length > 0) {
-      console.log(`Documentos encontrados con el correo ${correo}:`, result);
+      console.log('Productos encontrados');
       res.status(200).json(result);
     } else {
-      console.log(`No se encontraron documentos con el correo ${correo}.`);
-      res.status(404).send(`No se encontraron documentos con el correo ${correo}.`);
+      console.log('Productos no encontrados');
+      res.status(404).send('Productos no encontrados');
     }
   } catch (err) {
     console.error('Error al buscar documento en MongoDB:', err);
@@ -144,3 +121,26 @@ app.post('/insertarusuarios', async (req, res) => {
   }
 });
 
+app.delete('/eliminar/:id', async (req, res) => {
+  try {
+    await client.connect();
+    console.log('Conexión establecida con MongoDB.');
+
+    const db = client.db('tiendas');
+    const collection = db.collection('productos');
+    const id = req.params.id;
+
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 1) {
+      console.log(`Documento con ID ${id} eliminado correctamente.`);
+      res.status(200).send(`Documento con ID ${id} eliminado correctamente.`);
+    } else {
+      console.log(`No se encontró documento con ID ${id}.`);
+      res.status(404).send(`No se encontró documento con ID ${id}.`);
+    }
+  } catch (err) {
+    console.error('Error al eliminar documento en MongoDB:', err);
+    res.status(500).send('Error al eliminar documento en MongoDB.');
+  } 
+});
