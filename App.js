@@ -9,9 +9,13 @@ const uris = 'mongodb+srv://mondongoekix:mongo102030@mongocluster0.nucsdpn.mongo
 const client = new MongoClient(uris, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
+
 app.use(cors({
-  origin: ['http://127.0.0.1:5500']
+  origin: '*', // Esto permite solicitudes desde cualquier origen. Cambia '*' por la URL específica si es necesario.
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 client.connect()
   .then(() => {
     console.log('Conexión establecida con MongoDB.');
@@ -25,8 +29,6 @@ client.connect()
     console.error('Error al conectar con MongoDB:', err);
     process.exit(1);
   });
-
-
 app.get('/usuario/:correo', async (req, res) => {
   try {
 
