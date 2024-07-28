@@ -29,17 +29,18 @@
     <div id="pagination" class="navegation"></div>
 
     <script>
+        const ip = localStorage.getItem('serverIp');
         document.getElementById('search').addEventListener('input', function() {
             currentPage = 1; // Reset to first page on search
             fetchProductos(this.value);
         });
-
+        localStorage.setItem('serverIp', ip);
         const ITEMS_PER_PAGE = 3;
         let currentPage = 1;
         let allproductos = [];
 
         function fetchProductos(query = '') {
-            fetch('http://localhost:3002/producto')
+            fetch('http://'+ip+':3002/producto')
                 .then(response => response.json())
                 .then(data => {
                     console.log(JSON.stringify(data, null, 2));

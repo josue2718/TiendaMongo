@@ -30,6 +30,7 @@
   <div id="pagination" class="navegation"></div>
 
   <script>
+    const ip = localStorage.getItem('serverIp');
     document.getElementById('search').addEventListener('input', function() {
       currentPage = 1; // Reset to first page on search
       fetchProductos(this.value);
@@ -40,7 +41,7 @@
     let allproductos = [];
 
     function fetchProductos(query = '') {
-      fetch('http://localhost:3002/producto')
+      fetch('http://'+ip+':3002/producto')
         .then(response => response.json())
         .then(data => {
           console.log(JSON.stringify(data, null, 2));
@@ -95,7 +96,7 @@
     }
 
     function deleteProducto(id) {
-            fetch(`http://localhost:3002/eliminar/${id}`, {
+            fetch(`http://${ip}:3002/eliminar/${id}`, {
                 method: 'DELETE'
             }).then(() => fetchProductos())
             currentPage = 1;

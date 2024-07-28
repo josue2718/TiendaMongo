@@ -37,8 +37,9 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const Id = params.get('id');
+        const ip = localStorage.getItem('serverIp');
 
-        fetch(`http://localhost:3002/bproducto/${Id}`)
+        fetch(`http://${ip}:3002/bproducto/${Id}`)
             .then(response => response.json())
             .then(res => {
                 res.forEach(producto => {
@@ -64,7 +65,7 @@
             fabricante: document.getElementById('fabricante').value, // Corregido el error tipográfico
         };
 
-        fetch(`http://localhost:3002/eproducto/${Id}`, {
+        fetch(`http://${ip}:3002/eproducto/${Id}`, {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json'

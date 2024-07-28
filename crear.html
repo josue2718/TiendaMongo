@@ -36,8 +36,9 @@
         <button type="submit">Update</button>
     </form>
     <script>
-       document.getElementById('newproduct').addEventListener('submit', async function(event) {
-    event.preventDefault();
+        const ip = localStorage.getItem('serverIp');
+        document.getElementById('newproduct').addEventListener('submit', async function(event) {
+        event.preventDefault();
   
     const name = document.getElementById('name').value;
     const precio = document.getElementById('precio').value;
@@ -46,7 +47,7 @@
     const imagen = document.getElementById('imagen').value;
   
     try {
-      const response = await fetch('http://localhost:3002/insertarproducto', {
+      const response = await fetch('http://'+ip+':3002/insertarproducto', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
