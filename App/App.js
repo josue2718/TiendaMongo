@@ -55,6 +55,31 @@ app.get('/usuario/:correo', async (req, res) => {
   
 });
 
+
+app.get('/usuario/', async (req, res) => {
+  try {
+
+    console.log('Conexión establecida con MongoDB.');
+    const db = clientadmin.db('tiendas');
+    const collection = db.collection('usuarios');
+    const correo = req.params.correo;
+
+    const result = await collection.find({}).toArray();
+
+    if (result.length > 0) {
+      console.log(`Documentos encontrados con el correo ${correo}:`, result);
+      res.status(200).json(result);
+    } else {
+      console.log(`No se encontraron documentos con el correo ${correo}.`);
+      res.status(404).send(`No se encontraron documentos con el correo ${correo}.`);
+    }
+  } catch (err) {
+    console.error('Error al buscar documento en MongoDB:', err);
+    res.status(500).send('Error al buscar documento en MongoDB.');
+  } 
+  
+});
+
 app.post('/login', async (req, res) => {
   try {
     console.log('login.');
@@ -105,7 +130,7 @@ app.post('/insertarusuarios', async (req, res) => {
 
 /*------------------------------------------------------Productos-------------------------------------------------*/
 const port = 3002;
-const uri = 'mongodb+srv://admintienda:admintienda102030@mongocluster0.nucsdpn.mongodb.net/';
+const uri = 'mongodb+srv://perras:perras102030@mongocluster0.nucsdpn.mongodb.net/';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());

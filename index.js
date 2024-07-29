@@ -1,4 +1,4 @@
-const ip = '192.168.247.120';
+const ip = 'localhost';
 localStorage.setItem('serverIp', ip);
 
 document.getElementById('correo').addEventListener('input', async function(event) {
@@ -53,7 +53,7 @@ document.getElementById('newuser').addEventListener('submit', async function(eve
     const fechainicio = new Date();
   
     try {
-      const response = await fetch('http://localhost:3003/insertarusuarios', {
+      const response = await fetch('http://'+ip+':3003/insertarusuarios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
