@@ -1,4 +1,4 @@
-const ip = '192.168.1.6';
+const ip = '192.168.247.120';
 localStorage.setItem('serverIp', ip);
 
 document.getElementById('correo').addEventListener('input', async function(event) {
@@ -6,7 +6,7 @@ document.getElementById('correo').addEventListener('input', async function(event
     const correo = document.getElementById('correo').value;
     const password = document.getElementById('password').value;
     
-    fetch(`http://${ip}:3002/usuario/${encodeURIComponent(correo)}`)
+    fetch(`http://${ip}:3003/usuario/${encodeURIComponent(correo)}`)
             .then(res => res.json())
             .then(res => {
                 res.forEach(item => {
@@ -22,7 +22,7 @@ document.getElementById('login').addEventListener('submit', async function(event
     const correo = document.getElementById('correo').value;
     const password = document.getElementById('password').value;
     
-    fetch('http://'+ip+':3002/login', {
+    fetch('http://'+ip+':3003/login', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ document.getElementById('newuser').addEventListener('submit', async function(eve
     const fechainicio = new Date();
   
     try {
-      const response = await fetch('http://localhost:3002/insertarusuarios', {
+      const response = await fetch('http://localhost:3003/insertarusuarios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
