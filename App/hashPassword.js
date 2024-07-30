@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb'); // Librería para conectarse a Mongo
 const uris = {
   empleado: 'mongodb+srv://mondongoekix:mongo102030@mongocluster0.nucsdpn.mongodb.net/'
 } ;
-const client = new MongoClient(empleado); // Crear un cliente de MongoDB
+const client = new MongoClient(empleado); // Crear un cliente de MongoDBñ
 
 async function run() {
   try {
